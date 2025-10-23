@@ -3,12 +3,12 @@ import {
   View,
   Text,
   Button,
-  StyleSheet,
   ActivityIndicator,
   ScrollView,
 } from "react-native";
+import styles from "./styles/users.style";
 
-export default function UsersListScreen({ navigation }) {
+export default function Users({ navigation }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -31,7 +31,7 @@ export default function UsersListScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Student Lists</Text>
+
       {loading ? (
         <ActivityIndicator size="large" />
       ) : (
@@ -50,22 +50,8 @@ export default function UsersListScreen({ navigation }) {
           ))}
         </ScrollView>
       )}
-      <Button
-        title="Sign Out"
-        onPress={() => navigation.navigate("Signup")}
-      />
+
+      <Button title="Add Student" onPress={() => navigation.navigate("Sign-Up")} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, paddingTop: 50, backgroundColor: "#fff" },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  userCard: { padding: 10, borderBottomWidth: 1, borderBottomColor: "#ddd" },
-  name: { fontSize: 18, fontWeight: "600" },
-});
