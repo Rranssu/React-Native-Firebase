@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const { firstName, lastName, course, year, age, phoneNumber } = req.body;
-    const docRef = await db.collection("users").add({
+    const docRef = await db.collection("students").add({
       firstName,
       lastName,
       course,

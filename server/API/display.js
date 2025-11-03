@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/students", async (req, res) => {
   try {
-    const snapshot = await db.collection("users").get();
+    const snapshot = await db.collection("students").get();
     const users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     res.json(users);
   } catch (error) {
@@ -16,7 +16,7 @@ router.get("/students", async (req, res) => {
 router.get("/students/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const doc = await db.collection("users").doc(id).get();
+    const doc = await db.collection("students").doc(id).get();
     if (!doc.exists) {
       return res.status(404).json({ error: "students not found" });
     }
@@ -37,7 +37,7 @@ router.get("/students/course/:course/:level", async (req, res) => {
     }
 
     const snapshot = await db
-      .collection("users")
+      .collection("students")
       .where("course", "==", course.toUpperCase())
       .where("year", "==", year)
       .get();
@@ -59,7 +59,7 @@ router.get("/students/year/:level", async (req, res) => {
       return res.status(400).json({ error: "Invalid year level. Use 1st, 2nd, 3rd, or 4th." });
     }
 
-    const snapshot = await db.collection("users").where("year", "==", year).get();
+    const snapshot = await db.collection("students").where("year", "==", year).get();
     const students = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     res.json(students);
   } catch (error) {
@@ -77,7 +77,7 @@ router.get("/students/:field/:order", async (req, res) => {
     }
 
     const snapshot = await db
-      .collection("users")
+      .collection("students")
       .orderBy(field, order.toLowerCase())
       .get();
 
