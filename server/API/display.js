@@ -9,7 +9,7 @@ router.get("/students", async (req, res) => {
     const users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     res.json(users);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch users" });
+    res.status(500).json({ error: "Failed to fetch students" });
   }
 });
 
