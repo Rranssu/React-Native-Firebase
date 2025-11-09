@@ -5,6 +5,7 @@ import {
   Button,
   ActivityIndicator,
   ScrollView,
+  Alert,
 } from "react-native";
 import styles from "./styles/users.style";
 
@@ -15,7 +16,7 @@ export default function Users({ navigation }) {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/students");
+      const res = await fetch("http://localhost:3000/display/students");
       const data = await res.json();
       setUsers(data);
     } catch (err) {
@@ -25,13 +26,23 @@ export default function Users({ navigation }) {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+              await fetch(`http://localhost:3000/modify/students/${id}`, {
+                method: "DELETE",
+              });
+              setUsers(users.filter((user) => user.id !== id));
+            } catch (err) {
+              console.error("Error deleting user:", err);
+            }
+  };
+
   useEffect(() => {
     fetchUsers();
   }, []);
 
   return (
     <View style={styles.container}>
-
       {loading ? (
         <ActivityIndicator size="large" />
       ) : (
@@ -46,12 +57,23 @@ export default function Users({ navigation }) {
               </Text>
               <Text>Age: {user.age}</Text>
               <Text>Phone: {user.phoneNumber}</Text>
+
+              <View style={{ marginTop: 10 }}>
+                <Button
+                  title="Delete"
+                  color="red"
+                  onPress={() => handleDelete(user.id)}
+                />
+              </View>
             </View>
           ))}
         </ScrollView>
       )}
 
-      <Button title="Add Student" onPress={() => navigation.navigate("Sign-Up")} />
+      <Button
+        title="Add Student"
+        onPress={() => navigation.navigate("Sign-Up")}
+      />
     </View>
   );
 }

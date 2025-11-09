@@ -17,7 +17,7 @@ export default function Signup({ navigation }) {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/students", {
+      const res = await fetch("http://localhost:3000/insert/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ firstName, lastName, course, year, age, phoneNumber }),
@@ -26,7 +26,7 @@ export default function Signup({ navigation }) {
       if (res.ok) {
         Alert.alert("Success", "User added successfully!");
         console.log("User added successfully");
-        navigation.replace("Students");
+        navigation.replace("StudentS");
       } else {
         Alert.alert("Failed", "Could not add user.");
       }
